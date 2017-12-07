@@ -76,7 +76,6 @@ struct session_state
     uint32_t remote_registration_id;
     uint32_t local_registration_id;
 
-    int needs_refresh;
     ec_public_key *alice_base_key;
 
     signal_context *global_context;
@@ -356,9 +355,6 @@ int session_state_serialize_prepare(session_state *state, Textsecure__SessionStr
 
     session_structure->has_localregistrationid = 1;
     session_structure->localregistrationid = state->local_registration_id;
-
-    session_structure->has_needsrefresh = 1;
-    session_structure->needsrefresh = state->needs_refresh;
 
     if(state->alice_base_key) {
         result = ec_public_key_serialize_protobuf(
@@ -894,10 +890,6 @@ int session_state_deserialize_protobuf(session_state **state, Textsecure__Sessio
 
     if(session_structure->has_localregistrationid) {
         result_state->local_registration_id = session_structure->localregistrationid;
-    }
-
-    if(session_structure->has_needsrefresh) {
-        result_state->needs_refresh = session_structure->needsrefresh;
     }
 
     if(session_structure->has_alicebasekey) {
@@ -1747,19 +1739,6 @@ uint32_t session_state_get_local_registration_id(const session_state *state)
 {
     assert(state);
     return state->local_registration_id;
-}
-
-void session_state_set_needs_refresh(session_state *state, int value)
-{
-    assert(state);
-    assert(value == 0 || value == 1);
-    state->needs_refresh = value;
-}
-
-int session_state_get_needs_refresh(const session_state *state)
-{
-    assert(state);
-    return state->needs_refresh;
 }
 
 void session_state_set_alice_base_key(session_state *state, ec_public_key *key)

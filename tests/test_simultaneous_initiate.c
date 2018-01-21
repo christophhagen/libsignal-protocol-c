@@ -1564,7 +1564,7 @@ session_pre_key_bundle *create_alice_pre_key_bundle(signal_protocol_store_contex
 
     session_pre_key_bundle *alice_pre_key_bundle = 0;
     result = session_pre_key_bundle_create(&alice_pre_key_bundle,
-            1, 1,
+            1,
             alice_unsigned_pre_key_id,
             ec_key_pair_get_public(alice_unsigned_pre_key),
             alice_signed_pre_key_id, alice_signed_pre_key_public,
@@ -1627,7 +1627,7 @@ session_pre_key_bundle *create_bob_pre_key_bundle(signal_protocol_store_context 
 
     session_pre_key_bundle *bob_pre_key_bundle = 0;
     result = session_pre_key_bundle_create(&bob_pre_key_bundle,
-            1, 1,
+            1,
             bob_unsigned_pre_key_id,
             ec_key_pair_get_public(bob_unsigned_pre_key),
             bob_signed_pre_key_id, bob_signed_pre_key_public,

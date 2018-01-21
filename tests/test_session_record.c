@@ -139,9 +139,6 @@ void fill_test_session_state(session_state *state, ec_public_key *receiver_chain
             &pre_key_id, 5678, pending_pre_key_base_key);
     SIGNAL_UNREF(pending_pre_key_base_key);
 
-    session_state_set_remote_registration_id(state, 0xDEADBEEF);
-    session_state_set_local_registration_id(state, 0xBAADF00D);
-
     session_state_set_needs_refresh(state, 0);
 
     ec_public_key *alice_base_key = create_test_ec_public_key(global_context);
@@ -317,16 +314,6 @@ void compare_session_states(session_state *state1, session_state *state2,
             ck_assert_int_eq(ec_public_key_compare(base_key1, base_key2), 0);
         }
     }
-
-    /* Compare remote registration IDs */
-    uint32_t remote_registration_id1 = session_state_get_remote_registration_id(state1);
-    uint32_t remote_registration_id2 = session_state_get_remote_registration_id(state2);
-    ck_assert_int_eq(remote_registration_id1, remote_registration_id2);
-
-    /* Compare local registration IDs */
-    uint32_t local_registration_id1 = session_state_get_local_registration_id(state1);
-    uint32_t local_registration_id2 = session_state_get_local_registration_id(state2);
-    ck_assert_int_eq(local_registration_id1, local_registration_id2);
 
     /* Compare refresh flags */
     int needs_refresh1 = session_state_get_needs_refresh(state1);

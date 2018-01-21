@@ -80,10 +80,6 @@ START_TEST(test_basic_pre_key_v2)
     signal_protocol_store_context *bob_store = 0;
     setup_test_store_context(&bob_store, global_context);
 
-    uint32_t bob_local_registration_id = 0;
-    result = signal_protocol_identity_get_local_registration_id(bob_store, &bob_local_registration_id);
-    ck_assert_int_eq(result, 0);
-
     ec_key_pair *bob_pre_key_pair = 0;
     result = curve_generate_key_pair(global_context, &bob_pre_key_pair);
     ck_assert_int_eq(result, 0);
@@ -94,7 +90,6 @@ START_TEST(test_basic_pre_key_v2)
 
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
@@ -140,10 +135,6 @@ START_TEST(test_basic_pre_key_v3)
     signal_protocol_store_context *bob_store = 0;
     setup_test_store_context(&bob_store, global_context);
 
-    uint32_t bob_local_registration_id = 0;
-    result = signal_protocol_identity_get_local_registration_id(bob_store, &bob_local_registration_id);
-    ck_assert_int_eq(result, 0);
-
     ec_key_pair *bob_pre_key_pair = 0;
     result = curve_generate_key_pair(global_context, &bob_pre_key_pair);
     ck_assert_int_eq(result, 0);
@@ -171,7 +162,6 @@ START_TEST(test_basic_pre_key_v3)
 
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
@@ -363,7 +353,6 @@ START_TEST(test_basic_pre_key_v3)
     ck_assert_int_eq(result, 0);
 
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31338, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
@@ -450,7 +439,6 @@ START_TEST(test_basic_pre_key_v3)
     ck_assert_int_eq(result, 0);
 
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31337, /* pre key ID */
             test_public_key,
@@ -524,10 +512,6 @@ START_TEST(test_bad_signed_pre_key_signature)
     signal_protocol_store_context *bob_store = 0;
     setup_test_store_context(&bob_store, global_context);
 
-    uint32_t bob_local_registration_id = 0;
-    result = signal_protocol_identity_get_local_registration_id(bob_store, &bob_local_registration_id);
-    ck_assert_int_eq(result, 0);
-
     /* Create Bob's regular and signed pre key pairs */
     ec_key_pair *bob_pre_key_pair = 0;
     result = curve_generate_key_pair(global_context, &bob_pre_key_pair);
@@ -568,7 +552,6 @@ START_TEST(test_bad_signed_pre_key_signature)
         /* Create a pre key bundle */
         session_pre_key_bundle *bob_pre_key = 0;
         result = session_pre_key_bundle_create(&bob_pre_key,
-                bob_local_registration_id,
                 1, /* device ID */
                 31337, /* pre key ID */
                 ec_key_pair_get_public(bob_pre_key_pair),
@@ -590,7 +573,6 @@ START_TEST(test_bad_signed_pre_key_signature)
     /* Create a correct pre key bundle */
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
@@ -633,10 +615,6 @@ START_TEST(test_repeat_bundle_message_v2)
     signal_protocol_store_context *bob_store = 0;
     setup_test_store_context(&bob_store, global_context);
 
-    uint32_t bob_local_registration_id = 0;
-    result = signal_protocol_identity_get_local_registration_id(bob_store, &bob_local_registration_id);
-    ck_assert_int_eq(result, 0);
-
     ec_key_pair *bob_pre_key_pair = 0;
     result = curve_generate_key_pair(global_context, &bob_pre_key_pair);
     ck_assert_int_eq(result, 0);
@@ -664,7 +642,6 @@ START_TEST(test_repeat_bundle_message_v2)
 
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
@@ -730,10 +707,6 @@ START_TEST(test_repeat_bundle_message_v3)
     signal_protocol_store_context *bob_store = 0;
     setup_test_store_context(&bob_store, global_context);
 
-    uint32_t bob_local_registration_id = 0;
-    result = signal_protocol_identity_get_local_registration_id(bob_store, &bob_local_registration_id);
-    ck_assert_int_eq(result, 0);
-
     ec_key_pair *bob_pre_key_pair = 0;
     result = curve_generate_key_pair(global_context, &bob_pre_key_pair);
     ck_assert_int_eq(result, 0);
@@ -761,7 +734,6 @@ START_TEST(test_repeat_bundle_message_v3)
 
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
@@ -935,10 +907,6 @@ START_TEST(test_bad_message_bundle)
     signal_protocol_store_context *bob_store = 0;
     setup_test_store_context(&bob_store, global_context);
 
-    uint32_t bob_local_registration_id = 0;
-    result = signal_protocol_identity_get_local_registration_id(bob_store, &bob_local_registration_id);
-    ck_assert_int_eq(result, 0);
-
     ec_key_pair *bob_pre_key_pair = 0;
     result = curve_generate_key_pair(global_context, &bob_pre_key_pair);
     ck_assert_int_eq(result, 0);
@@ -966,7 +934,6 @@ START_TEST(test_bad_message_bundle)
 
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
@@ -1098,10 +1065,6 @@ START_TEST(test_optional_one_time_pre_key)
     signal_protocol_store_context *bob_store = 0;
     setup_test_store_context(&bob_store, global_context);
 
-    uint32_t bob_local_registration_id = 0;
-    result = signal_protocol_identity_get_local_registration_id(bob_store, &bob_local_registration_id);
-    ck_assert_int_eq(result, 0);
-
     ec_key_pair *bob_pre_key_pair = 0;
     result = curve_generate_key_pair(global_context, &bob_pre_key_pair);
     ck_assert_int_eq(result, 0);
@@ -1129,7 +1092,6 @@ START_TEST(test_optional_one_time_pre_key)
 
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
-            bob_local_registration_id,
             1, /* device ID */
             0, 0,
             22, /* signed pre key ID */

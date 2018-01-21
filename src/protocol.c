@@ -32,7 +32,6 @@ struct pre_key_signal_message
 {
     ciphertext_message base_message;
     uint8_t version;
-    uint32_t registration_id;
     int has_pre_key_id;
     uint32_t pre_key_id;
     uint32_t signed_pre_key_id;
@@ -539,7 +538,7 @@ void signal_message_destroy(signal_type_base *type)
 /*------------------------------------------------------------------------*/
 
 int pre_key_signal_message_create(pre_key_signal_message **pre_key_message,
-        uint8_t message_version, uint32_t registration_id, const uint32_t *pre_key_id,
+        uint8_t message_version, const uint32_t *pre_key_id,
         uint32_t signed_pre_key_id, ec_public_key *base_key, ec_public_key *identity_key,
         signal_message *message,
         signal_context *global_context)
@@ -561,7 +560,6 @@ int pre_key_signal_message_create(pre_key_signal_message **pre_key_message,
     result_message->base_message.global_context = global_context;
 
     result_message->version = message_version;
-    result_message->registration_id = registration_id;
     if(pre_key_id) {
         result_message->has_pre_key_id = 1;
         result_message->pre_key_id = *pre_key_id;
@@ -602,9 +600,6 @@ static int pre_key_signal_message_serialize(signal_buffer **buffer, const pre_ke
     uint8_t *data = 0;
 
     uint8_t version = (message->version << 4) | CIPHERTEXT_CURRENT_VERSION;
-
-    message_structure.registrationid = message->registration_id;
-    message_structure.has_registrationid = 1;
 
     if(message->has_pre_key_id) {
         message_structure.prekeyid = message->pre_key_id;
@@ -728,10 +723,6 @@ int pre_key_signal_message_deserialize(pre_key_signal_message **message,
 
     result_message->version = version;
 
-    if(message_structure->has_registrationid) {
-        result_message->registration_id = message_structure->registrationid;
-    }
-
     if(message_structure->has_prekeyid) {
         result_message->pre_key_id = message_structure->prekeyid;
         result_message->has_pre_key_id = 1;
@@ -826,12 +817,6 @@ ec_public_key *pre_key_signal_message_get_identity_key(const pre_key_signal_mess
 {
     assert(message);
     return message->identity_key;
-}
-
-uint32_t pre_key_signal_message_get_registration_id(const pre_key_signal_message *message)
-{
-    assert(message);
-    return message->registration_id;
 }
 
 int pre_key_signal_message_has_pre_key_id(const pre_key_signal_message *message)

@@ -612,7 +612,6 @@ typedef struct {
     test_identity_store_key *keys;
     signal_buffer *identity_key_public;
     signal_buffer *identity_key_private;
-    uint32_t local_registration_id;
 } test_identity_store_data;
 
 int test_identity_key_store_get_identity_key_pair(signal_buffer **public_data, signal_buffer **private_data, void *user_data)
@@ -620,13 +619,6 @@ int test_identity_key_store_get_identity_key_pair(signal_buffer **public_data, s
     test_identity_store_data *data = user_data;
     *public_data = signal_buffer_copy(data->identity_key_public);
     *private_data = signal_buffer_copy(data->identity_key_private);
-    return 0;
-}
-
-int test_identity_key_store_get_local_registration_id(void *user_data, uint32_t *registration_id)
-{
-    test_identity_store_data *data = user_data;
-    *registration_id = data->local_registration_id;
     return 0;
 }
 
@@ -721,11 +713,8 @@ void setup_test_identity_key_store(signal_protocol_store_context *context, signa
     ec_private_key_serialize(&data->identity_key_private, identity_key_private);
     SIGNAL_UNREF(identity_key_pair_keys);
 
-    data->local_registration_id = (rand() % 16380) + 1;
-
     signal_protocol_identity_key_store store = {
             .get_identity_key_pair = test_identity_key_store_get_identity_key_pair,
-            .get_local_registration_id = test_identity_key_store_get_local_registration_id,
             .save_identity = test_identity_key_store_save_identity,
             .is_trusted_identity = test_identity_key_store_is_trusted_identity,
             .destroy_func = test_identity_key_store_destroy,

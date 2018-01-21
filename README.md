@@ -88,21 +88,17 @@ tests for example implementations.
 
 ## Client install time
 
-At install time, a libsignal-protocol-c client needs to generate its identity keys,
-registration id, and prekeys.
+At install time, a libsignal-protocol-c client needs to generate its identity keys and prekeys.
 
     ratchet_identity_key_pair *identity_key_pair;
-    uint32_t registration_id;
     signal_protocol_key_helper_pre_key_list_node *pre_keys_head;
     session_signed_pre_key *signed_pre_key;
 
     signal_protocol_key_helper_generate_identity_key_pair(&identity_key_pair, global_context);
-    signal_protocol_key_helper_generate_registration_id(&registration_id, 0, global_context);
     signal_protocol_key_helper_generate_pre_keys(&pre_keys_head, start_id, 100, global_context);
     signal_protocol_key_helper_generate_signed_pre_key(&signed_pre_key, identity_key_pair, 5, timestamp, global_context);
 
     /* Store identity_key_pair somewhere durable and safe. */
-    /* Store registration_id somewhere durable and safe. */
 
     /* Store pre keys in the pre key store. */
     /* Store signed pre key in the signed pre key store. */

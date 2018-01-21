@@ -63,7 +63,7 @@ int signal_message_is_legacy(const uint8_t *data, size_t len);
 void signal_message_destroy(signal_type_base *type);
 
 int pre_key_signal_message_create(pre_key_signal_message **pre_key_message,
-        uint8_t message_version, uint32_t registration_id, const uint32_t *pre_key_id,
+        uint8_t message_version, const uint32_t *pre_key_id,
         uint32_t signed_pre_key_id, ec_public_key *base_key, ec_public_key *identity_key,
         signal_message *message,
         signal_context *global_context);
@@ -76,7 +76,6 @@ int pre_key_signal_message_copy(pre_key_signal_message **message, pre_key_signal
 
 uint8_t pre_key_signal_message_get_message_version(const pre_key_signal_message *message);
 ec_public_key *pre_key_signal_message_get_identity_key(const pre_key_signal_message *message);
-uint32_t pre_key_signal_message_get_registration_id(const pre_key_signal_message *message);
 int pre_key_signal_message_has_pre_key_id(const pre_key_signal_message *message);
 uint32_t pre_key_signal_message_get_pre_key_id(const pre_key_signal_message *message);
 uint32_t pre_key_signal_message_get_signed_pre_key_id(const pre_key_signal_message *message);

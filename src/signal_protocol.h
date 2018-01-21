@@ -596,18 +596,6 @@ typedef struct signal_protocol_identity_key_store {
     int (*get_identity_key_pair)(signal_buffer **public_data, signal_buffer **private_data, void *user_data);
 
     /**
-     * Return the local client's registration ID.
-     *
-     * Clients should maintain a registration ID, a random number
-     * between 1 and 16380 that's generated once at install time.
-     *
-     * @param registration_id pointer to be set to the local client's
-     *     registration ID, if it was successfully retrieved.
-     * @return 0 on success, negative on failure
-     */
-    int (*get_local_registration_id)(void *user_data, uint32_t *registration_id);
-
-    /**
      * Save a remote client's identity key
      * <p>
      * Store a remote client's identity key as trusted.
@@ -784,7 +772,6 @@ int signal_protocol_signed_pre_key_remove_key(signal_protocol_store_context *con
  */
 
 int signal_protocol_identity_get_key_pair(signal_protocol_store_context *context, ratchet_identity_key_pair **key_pair);
-int signal_protocol_identity_get_local_registration_id(signal_protocol_store_context *context, uint32_t *registration_id);
 int signal_protocol_identity_save_identity(signal_protocol_store_context *context, const signal_protocol_address *address, ec_public_key *identity_key);
 int signal_protocol_identity_is_trusted_identity(signal_protocol_store_context *context, const signal_protocol_address *address, ec_public_key *identity_key);
 

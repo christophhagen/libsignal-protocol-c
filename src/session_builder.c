@@ -96,7 +96,6 @@ static int session_builder_process_pre_key_signal_message_v3(session_builder *bu
     session_pre_key *session_our_one_time_pre_key = 0;
     ec_key_pair *our_one_time_pre_key = 0;
     session_state *state = 0;
-    uint32_t local_registration_id = 0;
 
     int has_session_state = session_record_has_session_state(record,
             pre_key_signal_message_get_message_version(message),
@@ -157,14 +156,6 @@ static int session_builder_process_pre_key_signal_message_v3(session_builder *bu
         goto complete;
     }
 
-    result = signal_protocol_identity_get_local_registration_id(builder->store, &local_registration_id);
-    if(result < 0) {
-        goto complete;
-    }
-
-    session_state_set_local_registration_id(state, local_registration_id);
-    session_state_set_remote_registration_id(state,
-            pre_key_signal_message_get_registration_id(message));
     session_state_set_alice_base_key(state,
             pre_key_signal_message_get_base_key(message));;
 
@@ -203,7 +194,6 @@ int session_builder_process_pre_key_bundle(session_builder *builder, session_pre
     int has_their_one_time_pre_key_id = 0;
     uint32_t their_one_time_pre_key_id = 0;
     session_state *state = 0;
-    uint32_t local_registration_id = 0;
 
     assert(builder);
     assert(builder->store);
@@ -313,14 +303,6 @@ int session_builder_process_pre_key_bundle(session_builder *builder, session_pre
             session_pre_key_bundle_get_signed_pre_key_id(bundle),
             ec_key_pair_get_public(our_base_key));
 
-    result = signal_protocol_identity_get_local_registration_id(builder->store, &local_registration_id);
-    if(result < 0) {
-        goto complete;
-    }
-
-    session_state_set_local_registration_id(state, local_registration_id);
-    session_state_set_remote_registration_id(state,
-            session_pre_key_bundle_get_registration_id(bundle));
     session_state_set_alice_base_key(state, ec_key_pair_get_public(our_base_key));
 
     result = signal_protocol_session_store_session(builder->store, builder->remote_address, record);

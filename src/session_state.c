@@ -73,9 +73,6 @@ struct session_state
     int has_pending_pre_key;
     session_pending_pre_key pending_pre_key;
 
-    uint32_t remote_registration_id;
-    uint32_t local_registration_id;
-
     int needs_refresh;
     ec_public_key *alice_base_key;
 
@@ -350,12 +347,6 @@ int session_state_serialize_prepare(session_state *state, Textsecure__SessionStr
             goto complete;
         }
     }
-
-    session_structure->has_remoteregistrationid = 1;
-    session_structure->remoteregistrationid = state->remote_registration_id;
-
-    session_structure->has_localregistrationid = 1;
-    session_structure->localregistrationid = state->local_registration_id;
 
     session_structure->has_needsrefresh = 1;
     session_structure->needsrefresh = state->needs_refresh;
@@ -886,14 +877,6 @@ int session_state_deserialize_protobuf(session_state **state, Textsecure__Sessio
             goto complete;
         }
         result_state->has_pending_pre_key = 1;
-    }
-
-    if(session_structure->has_remoteregistrationid) {
-        result_state->remote_registration_id = session_structure->remoteregistrationid;
-    }
-
-    if(session_structure->has_localregistrationid) {
-        result_state->local_registration_id = session_structure->localregistrationid;
     }
 
     if(session_structure->has_needsrefresh) {
@@ -1723,30 +1706,6 @@ void session_state_clear_unacknowledged_pre_key_message(session_state *state)
     }
     memset(&state->pending_pre_key, 0, sizeof(state->pending_pre_key));
     state->has_pending_pre_key = 0;
-}
-
-void session_state_set_remote_registration_id(session_state *state, uint32_t id)
-{
-    assert(state);
-    state->remote_registration_id = id;
-}
-
-uint32_t session_state_get_remote_registration_id(const session_state *state)
-{
-    assert(state);
-    return state->remote_registration_id;
-}
-
-void session_state_set_local_registration_id(session_state *state, uint32_t id)
-{
-    assert(state);
-    state->local_registration_id = id;
-}
-
-uint32_t session_state_get_local_registration_id(const session_state *state)
-{
-    assert(state);
-    return state->local_registration_id;
 }
 
 void session_state_set_needs_refresh(session_state *state, int value)

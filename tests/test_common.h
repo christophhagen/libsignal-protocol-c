@@ -72,7 +72,6 @@ void setup_test_signed_pre_key_store(signal_protocol_store_context *context);
 
 /* Test identity key store */
 int test_identity_key_store_get_identity_key_pair(signal_buffer **public_data, signal_buffer **private_data, void *user_data);
-int test_identity_key_store_get_local_registration_id(void *user_data, uint32_t *registration_id);
 int test_identity_key_store_save_identity(const signal_protocol_address *address, uint8_t *key_data, size_t key_len, void *user_data);
 int test_identity_key_store_is_trusted_identity(const signal_protocol_address *address, uint8_t *key_data, size_t key_len, void *user_data);
 void test_identity_key_store_destroy(void *user_data);

@@ -124,7 +124,6 @@ START_TEST(test_serialize_pre_key_signal_message)
     uint32_t pre_key_id = 56;
     result = pre_key_signal_message_create(&pre_key_message,
             3,  /* message version */
-            42, /* registration ID */
             &pre_key_id, /* pre key ID */
             72, /* signed pre key ID */
             base_key, identity_key,
@@ -148,10 +147,6 @@ START_TEST(test_serialize_pre_key_signal_message)
     ec_public_key *identity_key1 = pre_key_signal_message_get_identity_key(pre_key_message);
     ec_public_key *identity_key2 = pre_key_signal_message_get_identity_key(result_pre_key_message);
     ck_assert_int_eq(ec_public_key_compare(identity_key1, identity_key2), 0);
-
-    int registration_id1 = pre_key_signal_message_get_registration_id(pre_key_message);
-    int registration_id2 = pre_key_signal_message_get_registration_id(result_pre_key_message);
-    ck_assert_int_eq(registration_id1, registration_id2);
 
     int has_pre_key_id1 = pre_key_signal_message_has_pre_key_id(pre_key_message);
     int has_pre_key_id2 = pre_key_signal_message_has_pre_key_id(result_pre_key_message);

@@ -193,7 +193,6 @@ int session_cipher_encrypt(session_cipher *cipher,
     }
 
     if(session_state_has_unacknowledged_pre_key_message(state) == 1) {
-        uint32_t local_registration_id = session_state_get_local_registration_id(state);
         int has_pre_key_id = 0;
         uint32_t pre_key_id = 0;
         uint32_t signed_pre_key_id;
@@ -212,7 +211,7 @@ int session_cipher_encrypt(session_cipher *cipher,
         }
 
         result = pre_key_signal_message_create(&pre_key_message,
-                session_version, local_registration_id, (has_pre_key_id ? &pre_key_id : 0),
+                session_version, (has_pre_key_id ? &pre_key_id : 0),
                 signed_pre_key_id, base_key, local_identity_key,
                 message,
                 cipher->global_context);
@@ -717,37 +716,6 @@ complete:
     SIGNAL_UNREF(cur_chain_key);
     SIGNAL_UNREF(next_chain_key);
     signal_explicit_bzero(&message_keys_result, sizeof(ratchet_message_keys));
-    return result;
-}
-
-int session_cipher_get_remote_registration_id(session_cipher *cipher, uint32_t *remote_id)
-{
-    int result = 0;
-    uint32_t id_result = 0;
-    session_record *record = 0;
-    session_state *state = 0;
-
-    assert(cipher);
-    signal_lock(cipher->global_context);
-
-    result = signal_protocol_session_load_session(cipher->store, &record, cipher->remote_address);
-    if(result < 0) {
-        goto complete;
-    }
-
-    state = session_record_get_state(record);
-    if(!state) {
-        result = SG_ERR_UNKNOWN;
-        goto complete;
-    }
-
-    id_result = session_state_get_remote_registration_id(state);
-
-complete:
-    if(result >= 0) {
-        *remote_id = id_result;
-    }
-    signal_unlock(cipher->global_context);
     return result;
 }
 

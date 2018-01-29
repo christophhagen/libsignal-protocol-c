@@ -26,7 +26,6 @@ struct session_signed_pre_key {
 struct session_pre_key_bundle {
     signal_type_base base;
     uint32_t registration_id;
-    int device_id;
     uint32_t pre_key_id;
     ec_public_key *pre_key_public;
     uint32_t signed_pre_key_id;
@@ -432,7 +431,7 @@ void session_signed_pre_key_destroy(signal_type_base *type)
 /*------------------------------------------------------------------------*/
 
 int session_pre_key_bundle_create(session_pre_key_bundle **bundle,
-        uint32_t registration_id, int device_id, uint32_t pre_key_id,
+        uint32_t registration_id, uint32_t pre_key_id,
         ec_public_key *pre_key_public,
         uint32_t signed_pre_key_id, ec_public_key *signed_pre_key_public,
         const uint8_t *signed_pre_key_signature_data, size_t signed_pre_key_signature_len,
@@ -451,7 +450,6 @@ int session_pre_key_bundle_create(session_pre_key_bundle **bundle,
     SIGNAL_INIT(result_bundle, session_pre_key_bundle_destroy);
 
     result_bundle->registration_id = registration_id;
-    result_bundle->device_id = device_id;
     result_bundle->pre_key_id = pre_key_id;
 
     if(pre_key_public) {
@@ -492,12 +490,6 @@ uint32_t session_pre_key_bundle_get_registration_id(const session_pre_key_bundle
 {
     assert(bundle);
     return bundle->registration_id;
-}
-
-int session_pre_key_bundle_get_device_id(const session_pre_key_bundle *bundle)
-{
-    assert(bundle);
-    return bundle->device_id;
 }
 
 uint32_t session_pre_key_bundle_get_pre_key_id(const session_pre_key_bundle *bundle)

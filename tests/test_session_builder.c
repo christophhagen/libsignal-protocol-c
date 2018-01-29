@@ -95,7 +95,6 @@ START_TEST(test_basic_pre_key_v2)
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
             0, 0, 0, 0, /* no signed pre key or signature */
@@ -172,7 +171,6 @@ START_TEST(test_basic_pre_key_v3)
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
             22, /* signed pre key ID */
@@ -364,7 +362,6 @@ START_TEST(test_basic_pre_key_v3)
 
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31338, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
             23, /* signed pre key ID */
@@ -451,7 +448,6 @@ START_TEST(test_basic_pre_key_v3)
 
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31337, /* pre key ID */
             test_public_key,
             23, /* signed pre key ID */
@@ -569,7 +565,6 @@ START_TEST(test_bad_signed_pre_key_signature)
         session_pre_key_bundle *bob_pre_key = 0;
         result = session_pre_key_bundle_create(&bob_pre_key,
                 bob_local_registration_id,
-                1, /* device ID */
                 31337, /* pre key ID */
                 ec_key_pair_get_public(bob_pre_key_pair),
                 22, /* signed pre key ID */
@@ -591,7 +586,6 @@ START_TEST(test_bad_signed_pre_key_signature)
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
             22, /* signed pre key ID */
@@ -665,7 +659,6 @@ START_TEST(test_repeat_bundle_message_v2)
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
             0, 0, 0, 0,
@@ -762,7 +755,6 @@ START_TEST(test_repeat_bundle_message_v3)
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
             22, /* signed pre key ID */
@@ -967,7 +959,6 @@ START_TEST(test_bad_message_bundle)
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             31337, /* pre key ID */
             ec_key_pair_get_public(bob_pre_key_pair),
             22, /* signed pre key ID */
@@ -1130,7 +1121,6 @@ START_TEST(test_optional_one_time_pre_key)
     session_pre_key_bundle *bob_pre_key = 0;
     result = session_pre_key_bundle_create(&bob_pre_key,
             bob_local_registration_id,
-            1, /* device ID */
             0, 0,
             22, /* signed pre key ID */
             ec_key_pair_get_public(bob_signed_pre_key_pair),

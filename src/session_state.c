@@ -73,7 +73,6 @@ struct session_state
     int has_pending_pre_key;
     session_pending_pre_key pending_pre_key;
 
-    int needs_refresh;
     ec_public_key *alice_base_key;
 
     signal_context *global_context;
@@ -347,9 +346,6 @@ int session_state_serialize_prepare(session_state *state, Textsecure__SessionStr
             goto complete;
         }
     }
-
-    session_structure->has_needsrefresh = 1;
-    session_structure->needsrefresh = state->needs_refresh;
 
     if(state->alice_base_key) {
         result = ec_public_key_serialize_protobuf(
@@ -877,10 +873,6 @@ int session_state_deserialize_protobuf(session_state **state, Textsecure__Sessio
             goto complete;
         }
         result_state->has_pending_pre_key = 1;
-    }
-
-    if(session_structure->has_needsrefresh) {
-        result_state->needs_refresh = session_structure->needsrefresh;
     }
 
     if(session_structure->has_alicebasekey) {
@@ -1706,19 +1698,6 @@ void session_state_clear_unacknowledged_pre_key_message(session_state *state)
     }
     memset(&state->pending_pre_key, 0, sizeof(state->pending_pre_key));
     state->has_pending_pre_key = 0;
-}
-
-void session_state_set_needs_refresh(session_state *state, int value)
-{
-    assert(state);
-    assert(value == 0 || value == 1);
-    state->needs_refresh = value;
-}
-
-int session_state_get_needs_refresh(const session_state *state)
-{
-    assert(state);
-    return state->needs_refresh;
 }
 
 void session_state_set_alice_base_key(session_state *state, ec_public_key *key)

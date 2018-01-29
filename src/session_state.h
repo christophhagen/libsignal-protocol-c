@@ -68,9 +68,6 @@ ec_public_key *session_state_unacknowledged_pre_key_message_get_base_key(const s
 int session_state_has_unacknowledged_pre_key_message(const session_state *state);
 void session_state_clear_unacknowledged_pre_key_message(session_state *state);
 
-void session_state_set_needs_refresh(session_state *state, int value);
-int session_state_get_needs_refresh(const session_state *state);
-
 void session_state_set_alice_base_key(session_state *state, ec_public_key *key);
 ec_public_key *session_state_get_alice_base_key(const session_state *state);
 

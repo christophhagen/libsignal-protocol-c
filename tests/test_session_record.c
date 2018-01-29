@@ -139,8 +139,6 @@ void fill_test_session_state(session_state *state, ec_public_key *receiver_chain
             &pre_key_id, 5678, pending_pre_key_base_key);
     SIGNAL_UNREF(pending_pre_key_base_key);
 
-    session_state_set_needs_refresh(state, 0);
-
     ec_public_key *alice_base_key = create_test_ec_public_key(global_context);
     session_state_set_alice_base_key(state, alice_base_key);
     SIGNAL_UNREF(alice_base_key);
@@ -314,11 +312,6 @@ void compare_session_states(session_state *state1, session_state *state2,
             ck_assert_int_eq(ec_public_key_compare(base_key1, base_key2), 0);
         }
     }
-
-    /* Compare refresh flags */
-    int needs_refresh1 = session_state_get_needs_refresh(state1);
-    int needs_refresh2 = session_state_get_needs_refresh(state2);
-    ck_assert_int_eq(needs_refresh1, needs_refresh2);
 
     /* Compare Alice base keys */
     ec_public_key *alice_base_key1 = session_state_get_alice_base_key(state1);

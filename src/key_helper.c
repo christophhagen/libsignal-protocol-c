@@ -43,39 +43,6 @@ complete:
     return result;
 }
 
-int signal_protocol_key_helper_generate_registration_id(uint32_t *registration_id, int extended_range, signal_context *global_context)
-{
-    uint32_t range;
-    uint32_t id_value;
-    int result = 0;
-
-    assert(global_context);
-    assert(global_context->crypto_provider.random_func);
-
-    if(extended_range == 0) {
-        range = 16380;
-    }
-    else if(extended_range == 1) {
-        range = INT32_MAX - 1;
-    }
-    else {
-        return SG_ERR_INVAL;
-    }
-
-    result = global_context->crypto_provider.random_func(
-            (uint8_t *)(&id_value), sizeof(id_value),
-            global_context->crypto_provider.user_data);
-    if(result < 0) {
-        return result;
-    }
-
-    id_value = (id_value % range) + 1;
-
-    *registration_id = id_value;
-
-    return 0;
-}
-
 int signal_protocol_key_helper_get_random_sequence(int *value, int max, signal_context *global_context)
 {
     int result = 0;

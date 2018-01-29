@@ -129,15 +129,6 @@ int session_cipher_decrypt_signal_message(session_cipher *cipher,
         signal_buffer **plaintext);
 
 /**
- * Gets the remote registration ID for this session cipher.
- *
- * @param remote_id Set to the value of the remote registration ID
- *
- * @return SG_SUCCESS on success, negative on error
- */
-int session_cipher_get_remote_registration_id(session_cipher *cipher, uint32_t *remote_id);
-
-/**
  * Gets the version of the session associated with this session cipher.
  *
  * @param version Set to the value of the session version

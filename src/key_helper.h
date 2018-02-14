@@ -18,7 +18,7 @@ extern "C" {
 int signal_protocol_key_helper_generate_identity_key_pair(ratchet_identity_key_pair **key_pair, signal_context *global_context);
 
 /**
- * Generate a random number bounded by the provided maximum
+ * Generate a random number between 0 (inclusive) and the provided maximum (exclusive).
  *
  * @param value set to the next random number
  * @param max the maximum value of the random number

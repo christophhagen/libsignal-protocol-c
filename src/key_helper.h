@@ -18,10 +18,28 @@ extern "C" {
 int signal_protocol_key_helper_generate_identity_key_pair(ratchet_identity_key_pair **key_pair, signal_context *global_context);
 
 /**
+<<<<<<< HEAD
  * Generate a random number bounded by the provided maximum
+=======
+ * Generate a registration ID.  Clients should only do this once,
+ * at install time.
+ *
+ * @param registration_id set to the generated registration ID
+ * @param extendedRange By default (0), the generated registration
+ *                      ID is sized to require the minimal possible protobuf
+ *                      encoding overhead. Specify true (1) if the caller needs
+ *                      the full range of MAX_INT at the cost of slightly
+ *                      higher encoding overhead.
+ * @return 0 on success, or negative on failure
+ */
+int signal_protocol_key_helper_generate_registration_id(uint32_t *registration_id, int extended_range, signal_context *global_context);
+
+/**
+ * Generate a random number between 0 (inclusive) and the provided maximum (exclusive).
+>>>>>>> master
  *
  * @param value set to the next random number
- * @param max the maximum value of the random number
+ * @param max the maximum bound on the value of the random number
  * @return 0 on success, or negative on failure
  */
 int signal_protocol_key_helper_get_random_sequence(int *value, int max, signal_context *global_context);
